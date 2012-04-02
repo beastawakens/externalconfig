@@ -4,6 +4,8 @@ p(note). externalconfig is a simple plugin which allows you to load a properties
 
 p(note). This means that when deploying your application as a war file inside Tomcat or other application server, you can override config values from outside the war for your Production environments etc.
 
+p(note). externalconfig was originally conceived and coded by Dan Griffin, who gave gracious permission to release it as a module to help others.  I've amended and extended it slightly, but all credit should go to Dan.
+
 h2. Getting started
 
 p(note). By default, the plugin will try and load a file with the same name as your application id (e.g. 'test', 'prod', etc) with the '.properties' suffix.
