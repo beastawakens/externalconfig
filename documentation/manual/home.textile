@@ -1,31 +1,23 @@
 h1. {module name}
 
-p(note). Write your module documentation in this file, possibly linking to other Textile files, and delete these notes when you are finished.
+p(note). externalconfig is a simple plugin which allows you to load a properties/config file from anywhere on the classpath.
 
-p(note). Start with a clear statement of what the module is and what it is for. Link to any third-party libraries that the module is based on.
-
-p(note). Briefly describe why you might want to use this module in a Play application.
-
-h2. Sample application
-
-p(note). Your module should contain a sample app in the @sample@ directory that demonstrates the module. Describe how to run the demo here.
+p(note). This means that when deploying your application as a war file inside Tomcat or other application server, you can override config values from outside the war for your Production environments etc.
 
 h2. Getting started
 
-p(note). Describe any installation that is required, beyond adding and resolving the module dependency.
+p(note). By default, the plugin will try and load a file with the same name as your application id (e.g. 'test', 'prod', etc) with the '.properties' suffix.
+If you would like to load a different file, then you can specify a filename in your application.conf with the following property:
+
+bc. externalConfig.fileName=external.config 
 
 h2. Configuration
 
-p(note). List any configuration options that the module uses, with an @h3.@ heading for each one.
+@h3.@ externalConfig.fileName
+
+Specify the name of the extra config file you want to load.
 
 h2. Usage
 
-p(note). Explain how to use the module, and describe any routes, controllers, models or views that the module provides.
+p(note). Include the plugin as a dependency in your application.  Make sure your external config file is present (even if empty).  For dev/testing purposes, you can keep this file in your conf folder alongside the other config files.
 
-h2. Tags
-
-p(note). List any tags the module provides, with an @h3.@ heading for each one. Include the tags’ arguments.
-
-h2. Commands
-
-p(note). List any commands the module provides, with an @h3.@ heading for each one. Include the commands’ options.

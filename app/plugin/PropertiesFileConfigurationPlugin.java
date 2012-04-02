@@ -11,7 +11,7 @@ import play.PlayPlugin;
 public class PropertiesFileConfigurationPlugin extends PlayPlugin {
 
 	public void onApplicationStart() {
-		String propertiesFilename = "/" + Play.id + ".properties";
+		String propertiesFilename = Play.configuration.getProperty("externalConfig.fileName", "/" + Play.id + ".properties");
 
 		Logger.info("Loading configuration from " + propertiesFilename);
 
