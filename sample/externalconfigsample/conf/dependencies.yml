@@ -1,0 +1,12 @@
+# Application dependencies
+
+require:
+    - play
+    - externalconfig -> externalconfig
+    
+repositories:
+    - My modules:
+        type:       local
+        artifact:   ${application.path}/../../../[module]
+        contains:
+            - externalconfig

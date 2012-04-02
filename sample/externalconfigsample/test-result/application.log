@@ -1,0 +1,7 @@
+02 Apr 2012 21:48:59,674 INFO  ~ Starting /home/ed/play-behave-workspace/externalconfig/sample/externalconfigsample
+02 Apr 2012 21:48:59,680 INFO  ~ Module externalconfig is available (/home/ed/play-behave-workspace/externalconfig/sample/externalconfigsample/../../../externalconfig)
+02 Apr 2012 21:49:00,479 WARN  ~ You're running Play! in DEV mode
+02 Apr 2012 21:49:00,594 INFO  ~ Listening for HTTP on port 9000 (Waiting a first request to start) ...
+02 Apr 2012 21:49:03,914 INFO  ~ Loading configuration from /sample.properties
+02 Apr 2012 21:49:04,487 INFO  ~ Connected to jdbc:h2:mem:play;MODE=MYSQL;LOCK_MODE=0
+02 Apr 2012 21:49:04,517 INFO  ~ Application 'externalconfigsample' is now started !
