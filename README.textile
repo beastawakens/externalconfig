@@ -1,4 +1,4 @@
-h1. {module name}
+h1. externalconfig
 
 p(note). externalconfig is a simple plugin which allows you to load a properties/config file from anywhere on the classpath.
 
