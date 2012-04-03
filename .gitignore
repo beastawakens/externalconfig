@@ -3,3 +3,4 @@
 .settings
 eclipse/
 commands.pyc
+dist/
