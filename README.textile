@@ -15,7 +15,7 @@ bc. externalConfig.fileName=external.config
 
 h2. Configuration
 
-@h3.@ externalConfig.fileName
+h3. externalConfig.fileName
 
 Specify the name of the extra config file you want to load.
 
