@@ -1,4 +1,4 @@
-h1. {module name}
+h1. externalconfig
 
 p(note). externalconfig is a simple plugin which allows you to load a properties/config file from anywhere on the classpath.
 
@@ -11,15 +11,21 @@ h2. Getting started
 p(note). By default, the plugin will try and load a file with the same name as your application id (e.g. 'test', 'prod', etc) with the '.properties' suffix.
 If you would like to load a different file, then you can specify a filename in your application.conf with the following property:
 
-bc. externalConfig.fileName=external.config 
+bc. externalConfig.fileName=/external.config 
 
 h2. Configuration
 
-@h3.@ externalConfig.fileName
+h3. externalConfig.fileName
 
-Specify the name of the extra config file you want to load.
+Specify the name of the extra config file you want to load.  If you want to load multiple files, seperate them with a comma.  e.g.
+
+bc. externalConfig.fileName=/one.config,/two.config,/three.config
 
 h2. Usage
 
 p(note). Include the plugin as a dependency in your application.  Make sure your external config file is present (even if empty).  For dev/testing purposes, you can keep this file in your conf folder alongside the other config files.
 
+p(note). NB. If you want to move all the config into an external file, you must still include the following properties in your application.conf file:
+
+bc. application.secret
+externalConfig.fileName (obviously!)
