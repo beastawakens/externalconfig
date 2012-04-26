@@ -24,8 +24,3 @@ bc. externalConfig.fileName=/one.config,/two.config,/three.config
 h2. Usage
 
 p(note). Include the plugin as a dependency in your application.  Make sure your external config file is present (even if empty).  For dev/testing purposes, you can keep this file in your conf folder alongside the other config files.
-
-p(note). NB. If you want to move all the config into an external file, you must still include the following properties (these are the ones found so far, others may exist) in your application.conf file:
-
-bc. application.secret
-externalConfig.fileName (obviously!)

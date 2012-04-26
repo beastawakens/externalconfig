@@ -10,10 +10,11 @@ import play.PlayPlugin;
 import play.libs.IO;
 
 public class PropertiesFileConfigurationPlugin extends PlayPlugin {
-
-	public void onApplicationStart() {
+	
+	@Override
+	public void onConfigurationRead() {
 		String[] propertiesFilenames = Play.configuration.getProperty("externalConfig.fileName", "/" + Play.id + ".properties").split(",");
-
+		
 		for (String propertiesFilename : propertiesFilenames) {
 			Logger.info("Loading configuration from " + propertiesFilename);
 			Properties properties = IO.readUtf8Properties(this.getClass().getResourceAsStream(propertiesFilename));
@@ -23,4 +24,5 @@ public class PropertiesFileConfigurationPlugin extends PlayPlugin {
 			}
 		}
 	}
+
 }
