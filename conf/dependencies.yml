@@ -1,4 +1,4 @@
-self: play -> externalconfig 0.1
+self: play -> externalconfig 0.2
 
 require:
     - play
