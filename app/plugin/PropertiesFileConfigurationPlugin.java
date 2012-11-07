@@ -18,44 +18,68 @@ import play.libs.IO;
  * @author Neoh79
  */
 public class PropertiesFileConfigurationPlugin extends PlayPlugin {
+    private static final String EC_FILENAME = "externalConfig.fileName";
+    private static final String EC_FILE_ABSOLUTE_PATH = "externalConfig.fileAbsolutePath";
+    private static final String SEPARATOR = System.getProperty("file.separator");
 
     /**
      * This method is automatically called when application.conf has been parsed
-     * and loaded.
+     * and loaded. It tries to read the properties mentioned in the
+     * 'externalConfig.fileName' and the 'externalConfig.fileNameAbsolute'
+     * properties.
      */
     public final void onConfigurationRead() {
-        String[] propertiesFilenames = Play.configuration.getProperty("externalConfig.fileName",
-                "/" + Play.id + ".properties").split(",");
-        String propertiesFileAbsolutePath = Play.configuration.getProperty("externalConfig.fileAbsolutePath");
+        readPropertiesFromFileName();
+    }
+
+    /**
+     * Read 0, 1 or more files from files mentioned in the
+     * 'externalConfig.fileName' property relative to the 'conf' directory. If
+     * 'externalConfig.fileAbsolutePath' is present is uses that value to prefix
+     * the filenames.
+     */
+    private void readPropertiesFromFileName() {
+        String filenameValue = Play.configuration.getProperty(EC_FILENAME, "/" + Play.id + ".properties");
+        String propertiesFileAbsolutePath = Play.configuration.getProperty(EC_FILE_ABSOLUTE_PATH);
+        String propertiesFilenameAndPath;
+        InputStream is;
+
+        String[] propertiesFilenames = filenameValue.split(",");
 
         for (String propertiesFilename : propertiesFilenames) {
-            String propertiesFilenameAndPath = null;
-            InputStream is = null;
-            if (propertiesFileAbsolutePath != null) {
-                propertiesFilenameAndPath = propertiesFileAbsolutePath + System.getProperty("file.separator")
-                        + propertiesFilename;
-                try {
-                    is = new FileInputStream(propertiesFilenameAndPath);
-                } catch (FileNotFoundException fnfe) {
-                    Logger.error("Not found configuration file " + propertiesFilenameAndPath);
-                }
-            } else {
-                // get from classpath
-                propertiesFilenameAndPath = propertiesFilename;
-                is = this.getClass().getResourceAsStream(propertiesFilenameAndPath);
-            }
-            Logger.info("Loading configuration from " + propertiesFilenameAndPath);
+            propertiesFilenameAndPath = null;
+            is = null;
 
             try {
-                Properties properties = IO.readUtf8Properties(is);
-
-                for (Entry<Object, Object> entry : properties.entrySet()) {
-                    Play.configuration.setProperty((String) entry.getKey(), (String) entry.getValue());
+                if (propertiesFileAbsolutePath != null && propertiesFileAbsolutePath.length() > 0) {
+                    if (propertiesFilename.startsWith("/") || propertiesFilename.startsWith("/")) {
+                        propertiesFilename = propertiesFilename.substring(1);
+                    }
+                    propertiesFilenameAndPath = propertiesFileAbsolutePath + SEPARATOR + propertiesFilename;
+                    is = new FileInputStream(propertiesFilenameAndPath);
+                } else {
+                    is = this.getClass().getResourceAsStream(propertiesFilename);
                 }
-            } catch (Exception e) {
-                Logger.error("Error when loading file " + propertiesFilenameAndPath);
+
+                if (is == null) {
+                    Logger.warn("Configuration file '" + propertiesFilenameAndPath
+                            + "' is not found. Ignoring the file.");
+                } else {
+                    Properties properties = IO.readUtf8Properties(is);
+
+                    Logger.info("Loading configuration from " + propertiesFilenameAndPath);
+                    for (Entry<Object, Object> entry : properties.entrySet()) {
+                        Play.configuration.setProperty((String) entry.getKey(), (String) entry.getValue());
+                    }
+                }
+            } catch (NullPointerException e) {
+                Logger.error("Error when loading file " + propertiesFilenameAndPath + ". Check your '" + EC_FILENAME
+                        + "' property.");
+            } catch (RuntimeException e) {
+                Logger.error("Error when loading file " + propertiesFilenameAndPath + ". Ignoring the file.");
+            } catch (FileNotFoundException e) {
+                Logger.warn("Configuration file '" + propertiesFilenameAndPath + "' is not found. Ignoring the file.");
             }
         }
     }
-
 }
