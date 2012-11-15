@@ -13,6 +13,10 @@ If you would like to load a different file, then you can specify a filename in y
 
 bc. externalConfig.fileName=/external.config 
 
+p(note). If you can't put the external config file to your classpath, you can set an absolute path with the following property:
+
+bc. externalConfig.fileAbsolutePath=/opt/myapp 
+
 h2. Configuration
 
 h3. externalConfig.fileName
@@ -20,6 +24,10 @@ h3. externalConfig.fileName
 Specify the name of the extra config file you want to load.  If you want to load multiple files, seperate them with a comma.  e.g.
 
 bc. externalConfig.fileName=/one.config,/two.config,/three.config
+
+h3. externalConfig.fileAbsolutePath
+
+Specify the absolute path where the plugin can find the extra config file(s) you want to load.
 
 h2. Usage
 
